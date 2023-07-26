@@ -1,0 +1,9 @@
+﻿@{
+    @model OpenFlowCRMModels.Models.Macchine
+}
+
+<link rel="stylesheet" href="~/css/colors.css" />
+
+<rect x="@Model.X" y="@Model.Y" width="@Model.Width" height="@Model.Height" class="button" fill="var(--blueMyCompany)" onclick="window.location.href = '/App/Macchine/Index?id=@Model.MacchineId';">
+</rect>
+<text style="fill:white" x="@(@Model.X + (@Model.Width / 2))" y="@(@Model.Y + (@Model.Height / 2))" text-anchor="middle" dy=".3em" class="label info" onclick="window.location.href = '/App/Macchine/Index?id=@Model.MacchineId';">@Model.Descrizione</text>

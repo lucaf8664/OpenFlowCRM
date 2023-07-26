@@ -1,0 +1,42 @@
+﻿@model BancIModels.ModelliPallet
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ModelliPallet</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Descrizione)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Descrizione)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Lunghezza)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Lunghezza)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Larghezza)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Larghezza)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Altezza)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Altezza)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

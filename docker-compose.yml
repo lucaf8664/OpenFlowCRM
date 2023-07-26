@@ -1,0 +1,39 @@
+version: '3.7'
+
+services:
+  openflowcrmapp:
+    image: openflowcrmapp
+    build:
+      context: .
+      dockerfile: DockerfileApp
+    env_file:
+      - conf.env
+    ports:
+      - "7100:443"
+    volumes:
+      - ./certificate.pfx:/app/certificate.pfx
+  openflowcrmapi:
+    image: openflowcrmapi
+    build:
+      context: .
+      dockerfile: DockerfileAPI
+    env_file:
+      - conf.env
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./certificate.pfx:/app/certificate.pfx
+  openflowcrmdb:
+    image: openflowcrmdb
+    build:
+      context: ./DBImage/
+      dockerfile: Dockerfile
+    env_file:
+      - conf.env
+    volumes:
+      - dbdata:/var/opt/mssql
+    ports:
+      - "1433:1433"
+
+volumes:
+  dbdata:

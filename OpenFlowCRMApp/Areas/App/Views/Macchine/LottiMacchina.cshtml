@@ -1,0 +1,239 @@
+﻿@model IEnumerable<OpenFlowCRMModels.Models.Lotti>
+
+<script type="application/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="application/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="application/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+<!-- Moment.js library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+
+<head>
+
+
+
+</head>
+
+<body>
+
+    <h1>Macchina @Model.FirstOrDefault()?.MacchinaAssegnata</h1>
+
+    @switch (Model.FirstOrDefault()?.Stato)
+    {
+
+        case OpenFlowCRMModels.STATO_LOTTO.PIANIFICATO:
+
+            <h2>Lotti pianificati</h2>
+
+            break;
+
+        case OpenFlowCRMModels.STATO_LOTTO.IN_PRODUZIONE:
+
+            <h2>Lotto in produzione</h2>
+
+            break;
+
+        case OpenFlowCRMModels.STATO_LOTTO.PRODOTTO:
+
+            <h2>Lotti ppodotti</h2>
+
+            break;
+
+        default:
+            <h2>Nessun lotto presente </h2>
+
+            break;
+    }
+
+
+
+@*
+    <label>Inizio:</label>
+    <input id="startdate" class="date_range_filter" />
+    <label>Fine:</label>
+    <input id="enddate" class="date_range_filter" />
+*@
+    <hr />
+
+    <table class=" table dataTable" id="lottiMacchinaTable">
+        <thead>
+            <tr>
+                <th>
+                    LottoId
+                </th>
+                <th>
+                    Nome
+                </th>
+                <th>
+
+                    Lunghezza
+                </th>
+                <th>
+
+                    Larghezza
+                </th>
+                <th>
+
+                    Altezza
+                </th>
+                <th>
+
+                    Quantita
+                </th>
+                <th>
+
+                    TipoMateriale
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LottoId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Lunghezza)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Larghezza)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Altezza)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantita)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoMateriale)
+                    </td>
+                    @*ci andrebbe il bottone*@
+                    @*<td>
+                <a asp-action="Edit" asp-route-id="@item.PartiteId">Modifica</a> |
+                <a asp-action="Details" asp-route-id="@item.PartiteId">Dettagli</a> |
+                <a asp-action="Delete" asp-route-id="@item.PartiteId">Cancella</a>
+                </td>*@
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <script>
+
+
+        jQuery(document).ready(function () {
+
+            var table = jQuery('#lottiMacchinaTable').DataTable({
+                "language": {
+                    "sProcessing": "Elaborando...",
+                    "sLengthMenu": "Mostra _MENU_ pagine",
+                    "sZeroRecords": "Nessun risultato trovato",
+                    "sEmptyTable": "Nessun dato disponibile in questa tabella",
+                    "sInfo": "Mostra pagine da _START_ a _END_ per un totale di _TOTAL_ pagine",
+                    "sInfoEmpty": "Mostra pagine da 0 a 0 per un totale di 0 pagine",
+                    "sInfoFiltered": "(filtra un totale di _MAX_ pagine)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Cerca:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Caricamento...",
+                    "oPaginate": {
+                        "sFirst": "Primo",
+                        "sLast": "Ultimo",
+                        "sNext": "Prossimo",
+                        "sPrevious": "Precedente"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Premi per ordinare la colonna in ordine ascendente",
+                        "sSortDescending": ": Premi per ordinare la colonna in ordine descendente"
+                    }
+                },
+                "columnDefs": [
+                    {
+                        "targets": 3,
+                        "render": function (data, type, row) {
+                            return moment(data, "DD/MM/YYYY").format("DD/MM/YYYY");
+                        }
+                    }
+                ],
+                "dateFormat": "dd/mm/yyyy",
+                "scrollY": "450px",
+                "info": true,
+                "searching": true,
+                "scrollCollapse": true,
+                "paging": true
+            });
+
+            // I instantiate the two datepickers here, instead of all at once like before.
+            // I also changed the dateFormat to match the format of the dates in the data table.
+            $("#startdate").datepicker({
+                "dateFormat": 'dd/mm/yy',
+                "onSelect": function (date) {
+
+                    var momentObject = moment(date, "DD/MM/YYYY");
+                    var dateObject = momentObject.toDate();
+
+                    minDateFilter = dateObject.getTime();
+                    table.draw(); // Redraw the table with the filtered data.
+                }
+            }).keyup(function () {
+                minDateFilter = new Date(this.value).getTime();
+                table.draw();
+            });
+
+            $("#enddate").datepicker({
+                "dateFormat": 'dd/mm/yy',
+                "onSelect": function (date) {
+
+                    var momentObject = moment(date, "DD/MM/YYYY");
+                    var dateObject = momentObject.toDate();
+
+                    maxDateFilter = dateObject.getTime();
+                    table.draw();
+                }
+            }).keyup(function () {
+                maxDateFilter = new Date(this.value).getTime();
+                table.draw();
+            });
+
+            // The below code actually does the date filtering.
+            minDateFilter = "";
+            maxDateFilter = "";
+
+            $.fn.dataTableExt.afnFiltering.push(
+                function (oSettings, aData, iDataIndex) {
+                    if (typeof aData._date == 'undefined') {
+
+                        var dateObject = moment(aData[3], "DD/MM/YYYY").toDate();
+                        aData._date = new Date(dateObject).getTime(); 
+                    }
+
+
+                    if (minDateFilter && !isNaN(minDateFilter)) {
+
+                        if (aData._date < minDateFilter) {
+                            return false;
+                        }
+                    }
+
+                    if (maxDateFilter && !isNaN(maxDateFilter)) {
+                        if (aData._date > maxDateFilter) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+            );
+
+
+        });
+
+    </script>
+
+</body>

@@ -1,0 +1,17 @@
+﻿@model OpenFlowCRMModels.Models.Macchine
+
+<h3>Lotti della macchina numero @Model.MacchineId - @Model.Name (@Model.Descrizione)</h3>
+<div>
+    <button onclick="window.location.href = '/App/Macchine/GetLottiMacchinaByIDStato?id=@Model.MacchineId&stato=0';">
+        PIANIFICATI
+    </button>
+    <button onclick="window.location.href = '/App/Macchine/GetLottiMacchinaByIDStato?id=@Model.MacchineId&stato=10';">
+        IN PRODUZIONE
+    </button>
+    <button onclick="window.location.href = '/App/Macchine/GetLottiMacchinaByIDStato?id=@Model.MacchineId&stato=20';">
+        PRODOTTI
+    </button>
+</div>
+
+<div>
+</div>

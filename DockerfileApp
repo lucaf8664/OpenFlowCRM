@@ -1,0 +1,27 @@
+# Use the official Microsoft .NET Core runtime image as the base image
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+
+WORKDIR /app
+EXPOSE 7100
+
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+
+COPY ["./OpenFlowCRMApp/", "./OpenFlowCRMApp/"]
+COPY ["./OpenFlowCRMModels/", "./OpenFlowCRMModels/"]
+
+COPY ["../certificate.pfx", "/app/certificate.pfx"]
+
+RUN dotnet restore "./OpenFlowCRMApp/OpenFlowCRMApp.csproj"
+
+RUN ls -la ./OpenFlowCRMApp/wwwroot/
+
+RUN dotnet build "./OpenFlowCRMApp/OpenFlowCRMApp.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "./OpenFlowCRMApp/OpenFlowCRMApp.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "OpenFlowCRMApp.dll"]

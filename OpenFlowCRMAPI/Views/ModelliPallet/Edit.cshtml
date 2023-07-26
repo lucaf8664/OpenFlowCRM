@@ -1,0 +1,49 @@
+﻿@model BancIModels.ModelliPallet
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>ModelliPallet</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Descrizione" class="control-label"></label>
+                <input asp-for="Descrizione" class="form-control" />
+                <span asp-validation-for="Descrizione" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lunghezza" class="control-label"></label>
+                <input asp-for="Lunghezza" class="form-control" />
+                <span asp-validation-for="Lunghezza" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Larghezza" class="control-label"></label>
+                <input asp-for="Larghezza" class="form-control" />
+                <span asp-validation-for="Larghezza" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Altezza" class="control-label"></label>
+                <input asp-for="Altezza" class="form-control" />
+                <span asp-validation-for="Altezza" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
