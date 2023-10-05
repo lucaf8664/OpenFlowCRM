@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OpenFlowCRMAPI\OpenFlowCRMAPI.csproj" />
     <ProjectReference Include="..\OpenFlowCRMModels\OpenFlowCRMModels.csproj" />
   </ItemGroup>
 
