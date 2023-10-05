@@ -45,6 +45,30 @@ namespace OpenFlowCRMAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost]
+        [Route("add")]
+        private async Task<ActionResult> AddUser(LoginDTO usersdata)
+        {
+            var hashAlgorithm = new HMACBlake2B(512);
+            hashAlgorithm.Initialize();
+
+            var hash = hashAlgorithm.ComputeHash(Encoding.UTF8.GetBytes(usersdata.username));
+
+            var utenti = new Utenti();
+
+            utenti.Username = usersdata.password;
+            utenti.PasswordHash = Convert.ToBase64String(hash);
+
+            // Add the user to the Users table in the database
+            using (var db = new SQL_TESTContext())
+            {
+                await db.Utenti.AddAsync(utenti);
+                db.SaveChanges();
+            }
+            return Ok();
+        } 
+
+        [AllowAnonymous]
+        [HttpPost]
         [Route("authenticate")]
         public async Task<ActionResult<Tokens>> Authenticate(LoginDTO usersdata)
         {
