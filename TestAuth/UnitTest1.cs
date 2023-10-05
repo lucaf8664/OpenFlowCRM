@@ -8,6 +8,9 @@ namespace TestAuth
     [TestClass]
     public class UnitTest1
     {
+
+        private long _key = 9999999;
+
         [TestMethod]
         public void AddUser()
         {
@@ -27,6 +30,66 @@ namespace TestAuth
             {
                 db.Utenti.Add(utenti);
                 db.SaveChanges();
+            }
+        }
+
+        [TestMethod]
+        public void TestInsertClienti()
+        {
+
+            var clienteTest = new Clienti();
+
+            clienteTest.Nome= "pippo";
+
+            // Add the user to the Users table in the database
+            using (var db = new SQL_TESTContext())
+            {
+                db.Clienti.Add(clienteTest);
+                db.SaveChanges();
+            }
+            _key = clienteTest.Idcliente;
+            Thread.Sleep(500);
+            using (var db = new SQL_TESTContext())
+            {
+                var ordineTrovato = db.Clienti.Find(clienteTest.Idcliente);
+
+                Assert.IsNotNull(ordineTrovato);
+            }
+        }
+
+        //[TestMethod]
+        //public void TestInsertClienti()
+        //{
+
+        //    var clienteTest = new Clienti();
+
+        //    clienteTest.Nome= "pippo";
+
+        //    // Add the user to the Users table in the database
+        //    using (var db = new SQL_TESTContext())
+        //    {
+        //        db.Clienti.Add(clienteTest);
+        //        db.SaveChanges();
+        //    }
+        //    _key = clienteTest.Idcliente;
+        //    Thread.Sleep(500);
+        //    using (var db = new SQL_TESTContext())
+        //    {
+        //        var ordineTrovato= db.Clienti.Find(clienteTest.Idcliente);
+
+        //        Assert.IsNotNull(ordineTrovato);
+        //    }
+        //}
+        [TestCleanup] 
+        public void Cleanup()
+        {
+            using (var db = new SQL_TESTContext())
+            {
+                var ordineTrovato = db.Clienti.Find(_key);
+
+                if(ordineTrovato != null)
+                    db.Clienti.Remove(ordineTrovato);
+
             }
         }
     }
