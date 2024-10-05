@@ -1,0 +1,13 @@
+Migrate to .net 8.0
+
+--Assess Your Application: Evaluate your existing.NET Framework application.
+--Plan the Migration: Create a migration plan and set goals.
+--Prepare the Development Environment: Install.NET 8 and the.NET MAUI workload.
+--Upgrade Project Files: Update the TargetFramework property in your project file to net8.0.
+--Code Modifications: Adjust your code to accommodate breaking changes and use newer features.
+--Testing and Validation: Ensure your application works correctly in.NET 8.0.
+--Deployment: Deploy your.NET 8.0 application
+
+Add migration features (da studiare)
+
+
