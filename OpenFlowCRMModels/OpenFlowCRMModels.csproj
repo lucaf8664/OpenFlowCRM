@@ -26,9 +26,9 @@
 
 	<ItemGroup>
 
-		<PackageReference Include="EfCore.SchemaCompare" Version="6.0.0" />
+		<PackageReference Include="EfCore.SchemaCompare" Version="7.0.0" />
 
-		<PackageReference Include="ErikEJ.EntityFrameworkCore.SqlServer.DateOnlyTimeOnly" Version="6.0.1" />
+		<PackageReference Include="ErikEJ.EntityFrameworkCore.SqlServer.DateOnlyTimeOnly" Version="7.0.10" />
 
 		<PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
 
