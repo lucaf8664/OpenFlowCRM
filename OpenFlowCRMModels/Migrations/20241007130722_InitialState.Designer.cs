@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OpenFlowCRMModels.Models;
 
@@ -11,9 +12,11 @@ using OpenFlowCRMModels.Models;
 namespace OpenFlowCRMModels.Migrations
 {
     [DbContext(typeof(SQL_TESTContext))]
-    partial class SQL_TESTContextModelSnapshot : ModelSnapshot
+    [Migration("20241007130722_InitialState")]
+    partial class InitialState
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
