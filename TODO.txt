@@ -8,6 +8,8 @@ Migrate to .net 8.0
 --Testing and Validation: Ensure your application works correctly in.NET 8.0.
 --Deployment: Deploy your.NET 8.0 application
 
+BISOGNA RIGENERARE I CERTIFICATI (certificate.pfx)
+
 Add migration features (da studiare)
 
 
