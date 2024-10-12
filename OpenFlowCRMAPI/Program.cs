@@ -24,7 +24,7 @@ Host.CreateDefaultBuilder(args)
             serverOptions.ListenAnyIP(5001, listenOptions =>
             {
 				var certificatePassword = Environment.GetEnvironmentVariable("CERTIFICATE_PASSWORD");
-				listenOptions.UseHttps("certificate.pfx", certificatePassword);
+				listenOptions.UseHttps("ssl\\certificate.pfx", certificatePassword);
             });
         });
     }).Build().Run();
