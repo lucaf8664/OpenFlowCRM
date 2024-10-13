@@ -70,46 +70,15 @@ namespace OpenFlowCRMAPI.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("authenticate")]
-        public async Task<ActionResult<Tokens>> Authenticate(LoginDTO usersdata)
+        public async Task<ActionResult<Tokens>> Authenticate(IJWTManagerRepository jwtManager, LoginDTO usersdata)
         {
             try
             {
-                var hashAlgorithm = new HMACBlake2B(512);
-                hashAlgorithm.Initialize();
-                var hash = hashAlgorithm.ComputeHash(Encoding.UTF8.GetBytes(usersdata.password));
-                var hashString = Convert.ToBase64String(hash);
+                Tokens response = jwtManager.Authenticate(usersdata);
 
-                if (!_context.Utenti.Any(x => x.Username == usersdata.username && x.PasswordHash == hashString))
-                {
-                    return Unauthorized();
-                }
+                if (response == null) return Unauthorized();
 
-                var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, usersdata.username),
-                new Claim(ClaimTypes.Email, usersdata.password),
-                new Claim(ClaimTypes.Role, "Admin")
-                };
-                string? secret = Environment.GetEnvironmentVariable("JWT_SECRET");
-                if (secret== null)
-                {
-                    secret = "hbUx0XI3Fb1dNi+XMugJW/Oe1VKERBErXYc/HmngAhU="; //TODO:
-                                                                             //throw new Exception("Set the JWT_SECRET environment variable"); 
-                }
-                var tokenGenerator = new JwtTokenGenerator(secret);
-                var token = tokenGenerator.GenerateToken(claims);
-
-                var principal = new ClaimsPrincipal(new ClaimsIdentity(claims, "OpenFlowCRMCookie"));
-                var properties = new AuthenticationProperties
-                {
-                    IsPersistent = true,
-                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(60)
-                };
-                await HttpContext.SignInAsync("OpenFlowCRMCookie",
-                    principal,
-                    properties);
-
-                return Ok(new { Token = token });
+                return Ok(response);
             }
             catch (Exception ex)
             {
