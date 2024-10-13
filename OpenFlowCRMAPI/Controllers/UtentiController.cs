@@ -17,13 +17,13 @@ namespace OpenFlowCRMAPI.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UtentiController : ControllerBase
     {
         private readonly IJWTManagerRepository _jWTManager;
         private readonly SQL_TESTContext _context;
         protected readonly IConfiguration _config;
 
-        public UsersController(IJWTManagerRepository jWTManager, IConfiguration config, SQL_TESTContext context)
+        public UtentiController(IJWTManagerRepository jWTManager, IConfiguration config, SQL_TESTContext context)
         {
             _context = context;
             _config = config;
@@ -103,7 +103,7 @@ namespace OpenFlowCRMAPI.Controllers
                 var properties = new AuthenticationProperties
                 {
                     IsPersistent = true,
-                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30)
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(60)
                 };
                 await HttpContext.SignInAsync("OpenFlowCRMCookie",
                     principal,
