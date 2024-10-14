@@ -1,30 +1,71 @@
 
-using OpenFlowCRMAPI;
-using Serilog;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using OpenFlowCRMAPI.Services;
+using OpenFlowCRMModels.Models;
+using System.Text;
 
-Host.CreateDefaultBuilder(args)
-    .UseSerilog((hostingContext, loggerConfiguration) =>
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
+
+string? connection_string = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION_STRING");
+if (connection_string== null) { throw new Exception("Set the DEFAULT_CONNECTION_STRING environment variable"); }
+
+builder.Services.AddDbContext<SQL_TESTContext>(options => options.UseSqlServer(connection_string));
+builder.Services.AddTransient<IAuthService, AuthService>();
+
+
+// For Identity  
+builder.Services.AddIdentity<Utenti, IdentityRole>()
+                .AddEntityFrameworkStores<SQL_TESTContext>()
+                .AddDefaultTokenProviders();
+// Adding Authentication  
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+
+// Adding Jwt Bearer  
+.AddJwtBearer(options =>
+{
+    options.SaveToken = true;
+    options.RequireHttpsMetadata = false;
+    options.TokenValidationParameters = new TokenValidationParameters()
     {
-        loggerConfiguration
-            .ReadFrom.Configuration(hostingContext.Configuration)
-            .Enrich.FromLogContext()
-            .WriteTo.Console()
-            .WriteTo.File("Logs/OpenFlowCRMAPI.log", rollingInterval: RollingInterval.Day);
-    })
-    .ConfigureWebHostDefaults(webBuilder =>
-    {
-        webBuilder.UseStartup<Startup>();
-        webBuilder.ConfigureAppConfiguration((context, config) =>
-        {
-            config.SetBasePath(context.HostingEnvironment.ContentRootPath);
-            config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-        });
-        webBuilder.ConfigureKestrel(serverOptions =>
-        {
-            serverOptions.ListenAnyIP(5001, listenOptions =>
-            {
-				var certificatePassword = Environment.GetEnvironmentVariable("CERTIFICATE_PASSWORD");
-				listenOptions.UseHttps("ssl\\certificate.pfx", certificatePassword);
-            });
-        });
-    }).Build().Run();
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidAudience = builder.Configuration["JWTKey:ValidAudience"],
+        ValidIssuer = builder.Configuration["JWTKey:ValidIssuer"],
+        ClockSkew = TimeSpan.Zero,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTKey:Secret"]))
+    };
+});
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Open", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+});
+
+var app = builder.Build();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseCors("Open");
+app.MapControllers();
+
+app.Run();

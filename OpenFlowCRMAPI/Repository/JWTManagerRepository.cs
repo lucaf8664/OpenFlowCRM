@@ -24,10 +24,10 @@ namespace OpenFlowCRMAPI.Repository
         {
             var hashAlgorithm = new HMACBlake2B(512);
             hashAlgorithm.Initialize();
-            var hash = hashAlgorithm.ComputeHash(Encoding.UTF8.GetBytes(loginDTO.password));
+            var hash = hashAlgorithm.ComputeHash(Encoding.UTF8.GetBytes(loginDTO.Password));
             var hashString = Convert.ToBase64String(hash);
 
-            if (!_context.Utenti.Any(x => x.Username == loginDTO.username && x.PasswordHash == hashString))
+            if (!_context.Utenti.Any(x => x.Username == loginDTO.Username && x.PasswordHash == hashString))
             {
                 return null;
             }
@@ -63,7 +63,7 @@ namespace OpenFlowCRMAPI.Repository
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.username.ToString()) }),
+                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Username.ToString()) }),
                 Expires = DateTime.UtcNow.AddMinutes(15), // Token expiration time
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };

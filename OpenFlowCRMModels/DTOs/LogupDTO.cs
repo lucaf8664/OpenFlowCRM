@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace OpenFlowCRMModels.DTOs
 {
-    [Serializable]
-    public class LoginDTO
+    public class LogupDTO : LoginDTO
     {
-       public string Username { get; set; }
-        public string Password { get; set; }
+        public string Email { get; set; }
     }
 }
