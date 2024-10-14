@@ -42,15 +42,10 @@ namespace OpenFlowCRMAPI.Repository
 
             // Generate tokens
             var accessToken = GenerateAccessToken(loginDTO, secret);
-            var refreshToken = GenerateRefreshToken();
-
-            // Save refresh token (for demo purposes, this might be stored securely in a database)
-            // _userService.SaveRefreshToken(user.Id, refreshToken);
 
             var response = new Tokens
             {
-                AccessToken = accessToken,
-                RefreshToken = refreshToken
+                AccessToken = accessToken
             };
 
             return response;
@@ -73,8 +68,8 @@ namespace OpenFlowCRMAPI.Repository
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            var token = tokenHandler.CreateEncodedJwt(tokenDescriptor);
+            return token;
         }
 
         public string GenerateRefreshToken()
