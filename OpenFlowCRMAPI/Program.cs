@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using OpenFlowCRMAPI.Services;
 using OpenFlowCRMModels.Models;
+using OpenFlowCRMModels.Repository;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,11 +37,17 @@ builder.Services.AddAuthentication(options =>
     {
         ValidateIssuer = true,
         ValidateAudience = true,
-        ValidAudience = builder.Configuration["JWTKey:ValidAudience"],
-        ValidIssuer = builder.Configuration["JWTKey:ValidIssuer"],
+        ValidAudience = builder.Configuration["JWT:ValidAudience"],
+        ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
         ClockSkew = TimeSpan.Zero,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTKey:Secret"]))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
     };
+})
+
+.AddCookie("OpenFlowCRMCookie", options =>
+{
+    options.Cookie.Name = "OpenFlowCRMCookie";
+    options.TicketDataFormat = new CustomJwtDataFormat(builder.Configuration["JWTKey:Secret"]);
 });
 
 
