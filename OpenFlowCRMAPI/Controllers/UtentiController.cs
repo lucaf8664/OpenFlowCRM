@@ -11,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.DataProtection;
+using OpenFlowCRMAPI.Services;
 
 namespace OpenFlowCRMAPI.Controllers
 {
@@ -19,15 +20,15 @@ namespace OpenFlowCRMAPI.Controllers
     [ApiController]
     public class UtentiController : ControllerBase
     {
-        private readonly IJWTManagerRepository _jWTManager;
+        private readonly IAuthService _authService;
         private readonly SQL_TESTContext _context;
         protected readonly IConfiguration _config;
 
-        public UtentiController(IJWTManagerRepository jWTManager, IConfiguration config, SQL_TESTContext context)
+        public UtentiController(IAuthService authService, IConfiguration config, SQL_TESTContext context)
         {
             _context = context;
             _config = config;
-            this._jWTManager = jWTManager;
+            this._authService = authService;
         }
 
         [HttpGet]
@@ -70,15 +71,15 @@ namespace OpenFlowCRMAPI.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("authenticate")]
-        public async Task<ActionResult<Tokens>> Authenticate(IJWTManagerRepository jwtManager, LoginDTO usersdata)
+        public async Task<ActionResult<Tokens>> Authenticate(LoginDTO usersdata)
         {
             try
             {
-                Tokens response = jwtManager.Authenticate(usersdata);
+                var (status, message) = await _authService.Login(usersdata);
 
-                if (response == null) return Unauthorized();
-
-                return Ok(response);
+                if (status == 0)
+                    return BadRequest(message);
+                return Ok(message);
             }
             catch (Exception ex)
             {
