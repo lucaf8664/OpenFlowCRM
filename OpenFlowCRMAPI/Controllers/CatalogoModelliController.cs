@@ -12,7 +12,8 @@ using OpenFlowCRMModels.Models;
 namespace OpenFlowCRMAPI.Controllers
 {
 
-    [Authorize(AuthenticationSchemes = "OpenFlowCRMCookie")]
+    //[Authorize(AuthenticationSchemes = "OpenFlowCRMCookie")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class CatalogoModelliController : ControllerBase

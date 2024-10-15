@@ -5,7 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace OpenFlowCRMAPI.Controllers
 {
-    [Authorize(AuthenticationSchemes = "OpenFlowCRMCookie")]
+    //[Authorize(AuthenticationSchemes = "OpenFlowCRMCookie")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [Route("api/[controller]")]
     [ApiController]
     public class ComponentiMerceAPIController : ControllerBase
