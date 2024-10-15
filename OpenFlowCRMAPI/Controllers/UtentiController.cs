@@ -1,17 +1,14 @@
-﻿using OpenFlowCRMAPI.Models;
-using OpenFlowCRMAPI.Repository;
-using OpenFlowCRMModels.DTOs;
-using OpenFlowCRMModels.Models;
-using Konscious.Security.Cryptography;
-using Microsoft.AspNetCore.Authentication;
+﻿using Konscious.Security.Cryptography;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using OpenFlowCRMAPI.Models;
+using OpenFlowCRMAPI.Services;
+using OpenFlowCRMModels.DTOs;
+using OpenFlowCRMModels.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.AspNetCore.DataProtection;
-using OpenFlowCRMAPI.Services;
 
 namespace OpenFlowCRMAPI.Controllers
 {
@@ -66,7 +63,7 @@ namespace OpenFlowCRMAPI.Controllers
                 db.SaveChanges();
             }
             return Ok();
-        } 
+        }
 
         [AllowAnonymous]
         [HttpPost]
@@ -75,16 +72,13 @@ namespace OpenFlowCRMAPI.Controllers
         {
             try
             {
-                var (status, message) = await _authService.Login(usersdata);
-
-                if (status == 0)
-                    return BadRequest(message);
-                return Ok(message);
+               var token = await _authService.Login(usersdata);
+                return Ok(token);
             }
             catch (Exception ex)
             {
 
-                throw;
+                return BadRequest(ex.Message);
             }
 
         }

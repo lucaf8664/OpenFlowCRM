@@ -19,10 +19,6 @@ builder.Services.AddDbContext<SQL_TESTContext>(options => options.UseSqlServer(c
 builder.Services.AddTransient<IAuthService, AuthService>();
 
 
-// For Identity  
-builder.Services.AddIdentity<Utenti, IdentityRole>()
-                .AddEntityFrameworkStores<SQL_TESTContext>()
-                .AddDefaultTokenProviders();
 // Adding Authentication  
 builder.Services.AddAuthentication(options =>
 {

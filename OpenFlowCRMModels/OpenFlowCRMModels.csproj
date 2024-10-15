@@ -33,7 +33,6 @@
 		<PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
 
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
 
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
 		  <PrivateAssets>all</PrivateAssets>
