@@ -68,7 +68,7 @@ namespace OpenFlowCRMAPI.Services
             var hash = hashAlgorithm.ComputeHash(Encoding.UTF8.GetBytes(loginDTO.Password));
             var hashString = Convert.ToBase64String(hash);
 
-            var currentUser = _context.Utenti.FirstOrDefault(x => x.Username == loginDTO.Username && x.PasswordHash == hashString);
+            var currentUser = _context.Utenti.FirstOrDefault(x => x.UserName == loginDTO.UserName && x.PasswordHash == hashString);
 
             return currentUser;
             
@@ -84,7 +84,7 @@ namespace OpenFlowCRMAPI.Services
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier,user.Username),
+                new Claim(ClaimTypes.NameIdentifier,user.UserName),
             };
             var token = new JwtSecurityToken(_configuration["Jwt:ValidIssuer"],
                 _configuration["Jwt:ValidAudience"],

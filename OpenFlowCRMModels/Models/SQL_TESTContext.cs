@@ -89,7 +89,7 @@ namespace OpenFlowCRMModels.Models
 
                 entity.Property(e => e.PasswordHash).IsRequired();
 
-                entity.Property(e => e.Username)
+                entity.Property(e => e.UserName)
                     .IsRequired()
                     .HasMaxLength(50);
             });

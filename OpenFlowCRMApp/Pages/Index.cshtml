@@ -5,10 +5,33 @@
 }
 
 <div class="text-center">
+    <div class="container border" style="padding:20px">
 
-    <input id="username" type="text" />
-    <input id="password" type="password" />
-    <input id="loginbutton" onclick="UserLogin()" type="submit" value="Log in" />
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Utente.UserName"/>
+            </div>
+            <div class="col-5">
+                <input id="username" type="text" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Utente.Password" />
+            </div>
+            <div class="col-5">
+                <input id="password" type="password" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <input type="submit" class="btn btn-primary" value="Log in" />
+            </div>
+        </div>
+    </div>
+    
+    
+    
 
     <script>
         // Add an event listener to the login form's submit button

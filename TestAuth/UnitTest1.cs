@@ -22,7 +22,7 @@ namespace TestAuth
 
             var utenti = new Utenti();
 
-            utenti.Username = "admin";
+            utenti.UserName = "admin";
             utenti.PasswordHash = Convert.ToBase64String(hash);
 
             // Add the user to the Users table in the database

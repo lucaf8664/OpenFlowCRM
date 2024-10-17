@@ -11,7 +11,7 @@ namespace OpenFlowCRMModels.Models
     public partial class Utenti
     {
         public long Id { get; set; }
-        public string Username { get; set; }
+        public string UserName { get; set; }
         public string PasswordHash { get; set; }
     }
 
@@ -34,7 +34,7 @@ namespace OpenFlowCRMModels.Models
 
         public async Task<string> AuthenticateAsync(string username, string password)
         {
-            var user = await _db.Utenti.SingleOrDefaultAsync(u => u.Username == username);
+            var user = await _db.Utenti.SingleOrDefaultAsync(u => u.UserName == username);
 
             if (user == null || !VerifyPasswordHash(password, user.PasswordHash))
             {

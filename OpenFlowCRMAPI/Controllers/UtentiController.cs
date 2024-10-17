@@ -49,11 +49,11 @@ namespace OpenFlowCRMAPI.Controllers
             var hashAlgorithm = new HMACBlake2B(512);
             hashAlgorithm.Initialize();
 
-            var hash = hashAlgorithm.ComputeHash(Encoding.UTF8.GetBytes(usersdata.Username));
+            var hash = hashAlgorithm.ComputeHash(Encoding.UTF8.GetBytes(usersdata.UserName));
 
             var utenti = new Utenti();
 
-            utenti.Username = usersdata.Password;
+            utenti.UserName = usersdata.Password;
             utenti.PasswordHash = Convert.ToBase64String(hash);
 
             // Add the user to the Users table in the database
