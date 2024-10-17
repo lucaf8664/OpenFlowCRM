@@ -5,6 +5,43 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <input id="username" type="text" />
+    <input id="password" type="password" />
+    <input id="loginbutton" onclick="UserLogin()" type="submit" value="Log in" />
+
+    <script>
+        // Add an event listener to the login form's submit button
+        function UserLogin() {
+            // Prevent the default form submission behavior
+
+            var n = document.getElementById("username").value;
+            var p = document.getElementById("password").value;
+
+            var loginDto = {
+                username: n,
+                password: p
+            }
+
+
+            $.ajax({
+                url: "/api/Auth/login", // endpoint
+                type: "POST",
+                data: JSON.stringify(loginDto),
+                contentType: "application/json",
+                success: function (result) {
+                    var token = result.token; // assuming the JSON response contains a property named "token"
+
+                    window.location.pathname = "/App/Home"
+                },
+                error: function (xhr, textStatus, error) {
+                    alert("Autenticazione fallita!");
+                    alert(textStatus);
+                    console.log(xhr.responseText);
+                }
+            });
+
+        };
+    </script>
+
 </div>
