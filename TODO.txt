@@ -12,4 +12,4 @@ BISOGNA RIGENERARE I CERTIFICATI (certificate.pfx)
 
 Add migration features (da studiare)
 
-
+https://www.youtube.com/watch?v=PjCQpG48z5o&t=661s
