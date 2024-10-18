@@ -13,3 +13,7 @@ BISOGNA RIGENERARE I CERTIFICATI (certificate.pfx)
 Add migration features (da studiare)
 
 https://www.youtube.com/watch?v=PjCQpG48z5o&t=661s
+
+https://learn.microsoft.com/it-it/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests#how-to-use-typed-clients-with-ihttpclientfactory
+
+Devo dichiarer un oggetto ClientService
