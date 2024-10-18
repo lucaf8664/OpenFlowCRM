@@ -8,12 +8,19 @@ namespace OpenFlowCRMApp.Pages
     {
         private readonly ILogger<IndexModel> _logger;
 
+        [BindProperty]
         public LoginDTO Utente { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
         }
+
+        public void OnPost() 
+        { 
+        
+        }
+
 
         public void OnGet()
         {
