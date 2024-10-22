@@ -7,11 +7,13 @@ using OpenFlowCRMAPI.Services;
 using OpenFlowCRMModels.Models;
 using OpenFlowCRMModels.Repository;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSwaggerGen();
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 string? connection_string = Environment.GetEnvironmentVariable("DEFAULT_CONNECTION_STRING");
 if (connection_string== null) { throw new Exception("Set the DEFAULT_CONNECTION_STRING environment variable"); }

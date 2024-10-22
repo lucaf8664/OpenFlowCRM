@@ -23,8 +23,6 @@ namespace OpenFlowCRMApp.Controllers
         [HttpGet(nameof(Create))]
         public IActionResult Create()
         {
-           
-           
 
             try
             {
@@ -57,27 +55,35 @@ namespace OpenFlowCRMApp.Controllers
         [HttpPost(nameof(Create))]
         public async Task<IActionResult> Create(Ordini model)
         {
-           
 
-            var partiteConfermate = new List<Partite>();
 
-            foreach (var partita in model.Partite)
+            try
             {
-                partita.Stato = STATO_PARTITA.ORDINE_CONFERMATO;
-                partiteConfermate.Add(partita);
+                var partiteConfermate = new List<Partite>();
+
+                foreach (var partita in model.Partite)
+                {
+                    partita.Stato = STATO_PARTITA.ORDINE_CONFERMATO;
+                    partiteConfermate.Add(partita);
+                }
+
+                var newOrdine = new Ordini()
+                {
+                    Cliente = model.Cliente,
+                    Descrizione = model.Descrizione,
+                    Partite = partiteConfermate
+                };
+
+                _context.Add(newOrdine);
+                await _context.SaveChangesAsync();
+
+                return Ok();
             }
-
-            var newOrdine = new Ordini()
+            catch (Exception ex)
             {
-                Cliente = model.Cliente,
-                Descrizione = model.Descrizione,
-                Partite = partiteConfermate
-            };
 
-            _context.Add(newOrdine);
-            await _context.SaveChangesAsync();
-
-            return Ok();
+                throw;
+            }
         }
     }
 }
