@@ -39,7 +39,7 @@ namespace OpenFlowCRMApp.Pages
 
                 HttpContext.Session.SetString("SessionToken", tokenString);
                 
-                return RedirectToPage("/Home");
+                return RedirectToPage("/Produzione/Index");
             }
 
             return Page();
