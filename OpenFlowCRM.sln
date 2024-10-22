@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenFlowCRMAPI", "OpenFlowC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestAuth", "TestAuth\TestAuth.csproj", "{815FEEDC-CD1C-4A6D-908B-45DEEA8E68A4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenFlowCRMApp", "OpenFlowCRMApp\OpenFlowCRMApp.csproj", "{708ECC9F-FCCB-43EE-89E2-E411B9197545}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenFlowCRMApp", "OpenFlowCRMApp\OpenFlowCRMApp.csproj", "{1ED398DD-B457-47D2-98C6-15CD0453785F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{815FEEDC-CD1C-4A6D-908B-45DEEA8E68A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{815FEEDC-CD1C-4A6D-908B-45DEEA8E68A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{815FEEDC-CD1C-4A6D-908B-45DEEA8E68A4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{708ECC9F-FCCB-43EE-89E2-E411B9197545}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{708ECC9F-FCCB-43EE-89E2-E411B9197545}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{708ECC9F-FCCB-43EE-89E2-E411B9197545}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{708ECC9F-FCCB-43EE-89E2-E411B9197545}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1ED398DD-B457-47D2-98C6-15CD0453785F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ED398DD-B457-47D2-98C6-15CD0453785F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ED398DD-B457-47D2-98C6-15CD0453785F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ED398DD-B457-47D2-98C6-15CD0453785F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

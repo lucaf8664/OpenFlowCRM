@@ -1,0 +1,161 @@
+﻿@model IEnumerable<OpenFlowCRMModels.Models.Lotti>
+
+
+<script type="application/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="application/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="application/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+<!-- Moment.js library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+
+<head>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+
+</head>
+
+<body>
+
+    <label>
+        OTTIMIZZA:
+    </label>
+
+    <button>
+        <div>
+            <span class="material-symbols-outlined" style="font-size: 50px;">
+                avg_time
+            </span>
+        </div>
+    </button>
+
+    @*
+    <label>Inizio:</label>
+    <input id="startdate" class="date_range_filter" />
+    <label>Fine:</label>
+    <input id="enddate" class="date_range_filter" />
+    *@
+    <hr />
+
+    <table class=" table dataTable" id="lottiNonAssegnatiTable">
+        <thead>
+            <tr>
+                <th>
+                    LottoId
+                </th>
+                <th>
+                    Nome
+                </th>
+                <th>
+
+                    Lunghezza
+                </th>
+                <th>
+
+                    Larghezza
+                </th>
+                <th>
+
+                    Altezza
+                </th>
+                <th>
+
+                    Quantita
+                </th>
+                <th>
+
+                    TipoMateriale
+                </th>
+                <th>
+                    MacchinaAssegnata
+                </th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LottoId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Lunghezza)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Larghezza)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Altezza)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantita)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoMateriale)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MacchinaAssegnata)
+                    </td>
+                    @*ci andrebbe il bottone*@
+                    @*<td>
+                <a asp-action="Edit" asp-route-id="@item.PartiteId">Modifica</a> |
+                <a asp-action="Details" asp-route-id="@item.PartiteId">Dettagli</a> |
+                <a asp-action="Delete" asp-route-id="@item.PartiteId">Cancella</a>
+                </td>*@
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <script>
+
+
+        jQuery(document).ready(function () {
+
+            var table = jQuery('#lottiNonAssegnatiTable').DataTable({
+                "language": {
+                    "sProcessing": "Elaborando...",
+                    "sLengthMenu": "Mostra _MENU_ pagine",
+                    "sZeroRecords": "Nessun risultato trovato",
+                    "sEmptyTable": "Nessun dato disponibile in questa tabella",
+                    "sInfo": "Mostra pagine da _START_ a _END_ per un totale di _TOTAL_ pagine",
+                    "sInfoEmpty": "Mostra pagine da 0 a 0 per un totale di 0 pagine",
+                    "sInfoFiltered": "(filtra un totale di _MAX_ pagine)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Cerca:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Caricamento...",
+                    "oPaginate": {
+                        "sFirst": "Primo",
+                        "sLast": "Ultimo",
+                        "sNext": "Prossimo",
+                        "sPrevious": "Precedente"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Premi per ordinare la colonna in ordine ascendente",
+                        "sSortDescending": ": Premi per ordinare la colonna in ordine descendente"
+                    }
+                }
+                        "dateFormat": "dd/mm/yyyy",
+                "scrollY": "450px",
+                //"ordering": true,
+                "info": true,
+                "searching": true,
+                "scrollCollapse": true,
+                "paging": true
+            });
+
+
+
+        });
+
+    </script>
+
+</body>

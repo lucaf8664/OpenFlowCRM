@@ -1,0 +1,54 @@
+﻿@model OpenFlowCRMModels.Models.Partite
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Partite</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PartiteId" />
+            <div class="form-group">
+                <label asp-for="Descrizione" class="control-label"></label>
+                <input asp-for="Descrizione" class="form-control" />
+                <span asp-validation-for="Descrizione" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PezziAlCarico" class="control-label"></label>
+                <input asp-for="PezziAlCarico" class="form-control" />
+                <span asp-validation-for="PezziAlCarico" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ncarichi" class="control-label"></label>
+                <input asp-for="Ncarichi" class="form-control" />
+                <span asp-validation-for="Ncarichi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataConsegna" class="control-label"></label>
+                <input asp-for="DataConsegna" class="form-control" />
+                <span asp-validation-for="DataConsegna" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Modello" class="control-label"></label>
+                <select asp-for="Modello" class="form-control" asp-items="ViewBag.Modello"></select>
+                <span asp-validation-for="Modello" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

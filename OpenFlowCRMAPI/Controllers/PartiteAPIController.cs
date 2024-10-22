@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace OpenFlowCRMAPI.Controllers
 {
-    [Authorize(AuthenticationSchemes = "Bearer")]
+    //[Authorize(AuthenticationSchemes = "Bearer")]
     [Route("api/[controller]")]
     [ApiController]
     public class PartiteAPIController : ControllerBase

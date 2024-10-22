@@ -1,0 +1,246 @@
+﻿
+@model OpenFlowCRMModels.Models.Ordini
+
+
+
+<h1>Inserisci Ordini</h1>
+
+<hr />
+
+@using (Html.BeginForm("Create", "Ordini", FormMethod.Post))
+{
+    <label for="cliente-input">Cliente:</label>
+
+    @Html.DropDownListFor(m => m.Cliente, ViewData["ListaClienti"] as IEnumerable<SelectListItem>)
+
+    @*<input type="text" id="ListaClienti" name="ListaClienti" class="partita-input" list="DL.ListaClienti">
+        <datalist id="DL.ListaClienti" class="partita-input">
+
+            @foreach (var item in ViewData["ListaClienti"] as IEnumerable<string>)
+            {
+                <option value="@item">@item</option>
+            }
+
+        </datalist>*@
+
+
+    <label for="descrizione-input">Descrizione:</label>
+    @Html.TextBoxFor(m => m.Descrizione, new { id = "descrizione-input" })
+
+
+    <table id="ordini-table">
+        <thead>
+            <tr>
+                <th>Descrizione</th>
+                <th>Pezzi Al Carico</th>
+                <th>Numero Carichi</th>
+                <th>Data Consegna</th>
+                <th>Catalogo Modelli</th>
+            </tr>
+        </thead>
+        <tbody id="ordini-body">
+        </tbody>
+    </table>
+
+
+
+    <button type="button" onclick="addPartita()">Aggiungi Partita</button>
+    <button type="submit">Salva</button>
+}
+
+<script>
+
+    var counter = 0;
+
+    window.onload = function () {
+        hideHeaders();
+    };
+
+    function hideHeaders()
+    {
+        var table = document.getElementById("ordini-table");
+        table.getElementsByTagName("thead")[0].style.display = "none";
+    }
+
+    function showHeaders() {
+        var table = document.getElementById("ordini-table");
+        table.getElementsByTagName("thead")[0].style.display = "table-header-group";
+    }
+
+    function addPartita() {
+
+        var table = document.getElementById("ordini-table");
+
+        showHeaders();
+
+        var tableLength = table.length;
+        var row = table.getElementsByTagName('tbody')[0].insertRow(tableLength);
+
+        var cellDescrizione = row.insertCell(0);
+        var input = document.createElement("input");
+        input.type = "text";
+        input.id = "Partite[" + counter + "].Descrizione";
+        input.name = "Partite[" + counter + "].Descrizione";
+        input.className = "partita-input";
+        input.innerText = "";
+        cellDescrizione.appendChild(input);
+
+        var cellPezziAlCarico = row.insertCell(1);
+        var input = document.createElement("input");
+        input.type = "number";
+        input.id = "Partite[" + counter + "].PezziAlCarico";
+        input.name = "Partite[" + counter + "].PezziAlCarico";
+        input.className = "partita-input";
+        input.innerText = 0;
+        cellPezziAlCarico.appendChild(input);
+
+        var cellNCarichi = row.insertCell(2);
+        var input = document.createElement("input");
+        input.type = "number";
+        input.id = "Partite[" + counter + "].NCarichi";
+        input.name = "Partite[" + counter + "].NCarichi";
+        input.className = "partita-input";
+        input.innerText = 0;
+        cellNCarichi.appendChild(input);
+
+        var cellDescrizione = row.insertCell(3);
+        var input = document.createElement("input");
+        input.type = "date";
+        input.id = "Partite[" + counter + "].DataConsegna";
+        input.name = "Partite[" + counter + "].DataConsegna";
+        input.className = "partita-input";
+        cellDescrizione.appendChild(input);
+
+        var cellDescrizione = row.insertCell(4);
+        var input = document.createElement("input");
+        input.type = "text";
+        input.id = "Partite[" + counter + "].ModelloText";
+        input.name = "Partite[" + counter + "].ModelloText";
+        input.className = "partita-input";
+        input.autocomplete = "off";
+
+        input.setAttribute("list", "DL.Partite[" + counter + "].Modello");
+
+        // Create a hidden input field to store the selected option's value
+        var hiddenInput = document.createElement("input");
+        hiddenInput.type = "hidden";
+        hiddenInput.id = "Partite[" + counter + "].Modello";
+        hiddenInput.name = "Partite[" + counter + "].Modello";
+
+
+
+        var datalist = document.createElement("datalist");
+        datalist.type = "text";
+        datalist.id = "DL.Partite[" + counter + "].Modello";
+        datalist.name = "DL.Partite[" + counter + "].Modello";
+        datalist.className = "partita-input";
+
+        var options = datalist.getElementsByTagName('option');
+
+        // Add event listener for when option is selected
+        input.addEventListener('input', function () {
+            var selectedOptionValue = input.value;
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].value === selectedOptionValue) {
+                    hiddenInput.value = selectedOptionValue;
+                    break;
+                }
+            }
+        });
+
+        // Add event listener for when option is selected
+        input.addEventListener('input', function () {
+            var selectedOptionValue = input.value;
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].value === selectedOptionValue) {
+                    input.value = options[i].text;
+                    break;
+                }
+            }
+        });
+
+        // Retrieve the list from the ViewData dictionary in your view
+        var ModelliList = @Html.Raw(Json.Serialize(ViewData["CatalogoModelli"]));
+
+
+        // Loop through the list and create an option element for each item
+        for (var i = 0; i < ModelliList.length; i++) {
+            var option = document.createElement("option");
+            option.value = ModelliList[i].split(';')[0];
+            option.text = ModelliList[i].split(';')[1];
+            datalist.appendChild(option);
+
+        }
+
+        if (input == null) {
+            alert("Input is null")
+        }
+
+        // Add datalist to HTML document
+
+        input.appendChild(datalist);
+
+        cellDescrizione.appendChild(input);
+        cellDescrizione.appendChild(hiddenInput);
+
+        var cell2 = row.insertCell(5);
+        var button = document.createElement("button");
+        button.type = "button";
+        button.onclick = function () { deletePartita(row) };
+        button.innerText = "Cancella";
+        cell2.appendChild(button);
+
+        counter++;
+    }
+
+    // Add event listener for when option is selected
+
+
+    function deletePartita(row) {
+        var table = document.getElementById("ordini-table");
+
+        var currentIndex = row.rowIndex -1;
+        
+        for (let i = currentIndex; i < counter-1; i++) {
+
+            var j = i + 1;
+
+            var currentPartitaDesc = document.getElementById("Partite[" + j + "].Descrizione");
+
+            currentPartitaDesc.id = "Partite[" + (i) + "].Descrizione"
+            currentPartitaDesc.name = "Partite[" + (i) + "].Descrizione"
+
+            var currentPartitaQuantita = document.getElementById("Partite[" + j + "].PezziAlCarico");
+
+            currentPartitaQuantita.id = "Partite[" + (i) + "].PezziAlCarico"
+            currentPartitaQuantita.name = "Partite[" + (i) + "].PezziAlCarico"
+
+            var currentPartitaQuantita = document.getElementById("Partite[" + j + "].NCarichi");
+
+            currentPartitaQuantita.id = "Partite[" + (i) + "].NCarichi"
+            currentPartitaQuantita.name = "Partite[" + (i) + "].NCarichi"
+
+            var currentPartitaDataConsegna = document.getElementById("Partite[" + j + "].DataConsegna");
+
+            currentPartitaDataConsegna.id = "Partite[" + (i) + "].DataConsegna"
+            currentPartitaDataConsegna.name = "Partite[" + (i) + "].DataConsegna"
+
+            var currentPartitaModello = document.getElementById("Partite[" + j + "].Modello");
+
+            currentPartitaModello.id = "Partite[" + (i) + "].Modello"
+            currentPartitaModello.name = "Partite[" + (i) + "].Modello"
+
+        }
+
+        table.deleteRow(currentIndex + 1)
+
+        counter--;
+
+        if (counter == 0) {
+            hideHeaders();
+        }
+
+    }
+</script>
+
+

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace OpenFlowCRMApp.Controllers
 {
     //[Authorize(AuthenticationSchemes = "OpenFlowCRMCookie")]
-    [Authorize(AuthenticationSchemes = "Bearer")]
+    //[Authorize(AuthenticationSchemes = "Bearer")]
     [Route("api/[controller]")]
     [ApiController]
     public class OrdiniAPIController : ControllerBase

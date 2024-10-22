@@ -1,0 +1,68 @@
+﻿@model IEnumerable<OpenFlowCRMModels.Models.Partite>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Partite</h1>
+@*
+<p>
+    <a asp-action="Create">Create New</a>
+</p>*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Descrizione
+            </th>
+            <th>
+                Pezzi Al Carico
+            </th>
+            <th>
+                Numero carichi
+            </th>
+            <th>
+                Data Consegna
+            </th>
+            <th>
+                Stato
+            </th>
+            <th>
+                Modello
+            </th>
+            <th>
+                Ordine
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descrizione)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PezziAlCarico)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ncarichi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataConsegna)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stato)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModelloNavigation.Descrizione)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PartiteId">Modifica</a> |
+                @*<a asp-action="Details" asp-route-id="@item.PartiteId">Dettagli</a> |*@
+                <a asp-action="Delete" asp-route-id="@item.PartiteId">Cancella</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
