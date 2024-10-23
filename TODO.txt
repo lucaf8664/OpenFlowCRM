@@ -19,3 +19,9 @@ https://learn.microsoft.com/it-it/dotnet/architecture/microservices/implement-re
 Devo dichiarer un oggetto ClientService
 
 https://www.youtube.com/watch?v=ReVJolYLZLU
+
+
+
+-- rivedere il database e implementare ottimizzazione assegnemento macchine-risorse umane
+
+--aggiungere sistema di autenticazione ? utilizzare windows identity
