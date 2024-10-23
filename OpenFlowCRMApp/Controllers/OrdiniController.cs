@@ -41,35 +41,46 @@ namespace OpenFlowCRMApp.Areas.App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Ordini model)
         {
-            var partiteConfermate = new List<Partite>();
-
-            foreach (var partita in model.Partite)
+            try
             {
-                partita.Stato = STATO_PARTITA.ORDINE_CONFERMATO;
-                partiteConfermate.Add(partita);
+
+                if(!ModelState.IsValid)
+                {
+                    return View();
+                }
+
+                var partiteConfermate = new List<Partite>();
+
+                foreach (var partita in model.Partite)
+                {
+                    partita.Stato = STATO_PARTITA.ORDINE_CONFERMATO;
+                    partiteConfermate.Add(partita);
+                }
+
+                var newOrdine = new Ordini()
+                {
+                    Cliente = model.Cliente,
+                    Descrizione = model.Descrizione,
+                    Partite = partiteConfermate
+                };
+
+                //serialize newOrdine in json
+                var serializedObj = Newtonsoft.Json.JsonConvert.SerializeObject(newOrdine);
+
+                JsonContent content = JsonContent.Create(newOrdine);
+
+                var response = await _client.PostAsync("api/OrdiniAPI/Create", content);
+
+
+                response.EnsureSuccessStatusCode();
+
+                return RedirectToAction();
             }
-
-            var newOrdine = new Ordini()
+            catch (Exception)
             {
-                Cliente = model.Cliente,
-                Descrizione = model.Descrizione,
-                Partite = partiteConfermate
-            };
 
-            //serialize newOrdine in json
-            var serializedObj = Newtonsoft.Json.JsonConvert.SerializeObject(newOrdine);
-
-            JsonContent content = JsonContent.Create(newOrdine);
-
-            var response = await _client.PostAsync("api/OrdiniAPI/Create", content);
-
-           
-
-            response.EnsureSuccessStatusCode();
-
-           
-
-            return RedirectToAction();
+                throw;
+            }
         }
     }
 }
