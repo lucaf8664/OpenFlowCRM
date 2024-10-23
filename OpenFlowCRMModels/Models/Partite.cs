@@ -2,19 +2,27 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace OpenFlowCRMModels.Models
 {
     [Serializable]
     public partial class Partite
     {
+
         public long PartiteId { get; set; }
         public string Descrizione { get; set; }
+        [Required]
         public int PezziAlCarico { get; set; }
+        [Required]
         public int Ncarichi { get; set; }
+        [Required]
         public DateTime DataConsegna { get; set; }
+
+        [Required]
         public long Modello { get; set; }
-        public long? Ordine { get; set; }
+        [Required]
+        public long Ordine { get; set; }
         public STATO_PARTITA Stato { get; set; }
 
         public virtual CatalogoModelli ModelloNavigation { get; set; }
