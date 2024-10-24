@@ -46,7 +46,7 @@ namespace OpenFlowCRMApp.Areas.App.Controllers
 
                 if(!ModelState.IsValid)
                 {
-                    return View();
+                    return View(model);
                 }
 
                 var partiteConfermate = new List<Partite>();
